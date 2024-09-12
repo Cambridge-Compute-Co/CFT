@@ -66,7 +66,7 @@ contract C3VirtualMachine {
     /// @notice Emitted when a virtual machine is stopped
     /// @param vmId The ID of the stopped VM
     /// @param refundedCredits The amount of credits refunded to the owner
-    event VirtualMachineStopped(uint256 indexed vmId, uint256 refundedCredits);
+    event VirtualMachineStopped(uint256 indexed vmId, uint256 refundedCredits, uint256 externalId);
 
     /// @notice Emitted when tokens are deposited
     /// @param user The address of the user who deposited tokens
@@ -202,18 +202,18 @@ contract C3VirtualMachine {
 
     /// @notice Stops a virtual machine and refunds unused credits
     /// @param vmId The ID of the virtual machine to stop
-    function stopVirtualMachine(uint256 vmId) external onlyVMOwner(vmId) {
-        _stopVirtualMachine(vmId);
+    function stopVirtualMachine(uint256 vmId, uint256 externalId) external onlyVMOwner(vmId) {
+        _stopVirtualMachine(vmId, externalId);
     }
 
     /// @notice Allows the manager to stop any virtual machine
     /// @param vmId The ID of the virtual machine to stop
-    function managerStopVirtualMachine(uint256 vmId) external onlyManager {
+    function managerStopVirtualMachine(uint256 vmId, uint256 externalId) external onlyManager {
         VirtualMachine storage vm = virtualMachines[vmId];
         require(vm.status != VMStatus.Stopped, "VM is already stopped");
 
         address vmOwner = vm.vmOwner;
-        _stopVirtualMachine(vmId);
+        _stopVirtualMachine(vmId, externalId);
 
         emit ManagerStopped(vmId, vmOwner);
     }
@@ -221,7 +221,7 @@ contract C3VirtualMachine {
     /// @notice Internal function to stop a virtual machine
     /// @param vmId The ID of the virtual machine to stop
     /// @dev Calculates consumed credits and refunds unused ones
-    function _stopVirtualMachine(uint256 vmId) internal {
+    function _stopVirtualMachine(uint256 vmId, uint256 externalId) internal {
         VirtualMachine storage vm = virtualMachines[vmId];
         require(vm.status != VMStatus.Stopped, "VM is already stopped");
 
@@ -240,7 +240,7 @@ contract C3VirtualMachine {
         vm.lockedTokens = 0;
         vm.status = VMStatus.Stopped;
 
-        emit VirtualMachineStopped(vmId, refundCredits);
+        emit VirtualMachineStopped(vmId, refundCredits, externalId);
     }
 
     /// @notice Retrieves the list of virtual machine IDs owned by the caller

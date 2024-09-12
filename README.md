@@ -8,10 +8,10 @@ This project aims to provide a comprehensive solution for DePin (Decentralized P
 
 ### Sepolia
 - **C3U Token**: 0x247EC86AfbbfF923D9E1E9555Be2241338dd5E0E
-- **C3ResourcePricing**: 0x1363B1a0147b9cD7a1a93F595b02a014dfB0A0B4
-- **C3VirtualMachine**: 0x4E8dA82BcC48536F2181FeE1A2fE67e0a460a30f
+- **C3ResourcePricing**: 0x2387AEDcc0beC60dAf5b0fcecB717733283e7cfE
+- **C3VirtualMachine**: 0xCBc21607708e4Fa1A31CFA70E7EA7f7d642Bca56
     - VM Manager: 0xEeB40816c52DE2ae2875f2Ddef43DE9030891a10
-- **C3Volume**: 0x2E877d832C8A2b1fAE616d385a9C0E34F6c51579
+- **C3Volume**: 0x4F8ebE7E80d2658Eee38043CCb0CC6c9A03Bf43A
 
 ### Mainnet
 - **C3U Token**:
