@@ -36,16 +36,11 @@ contract C3Volume {
     /// @param size The size of the volume in GB
     /// @param resourceId The ID of the resource
     /// @param totalHoursToRun Total hours the volume is expected to run
-    event VolumeCreated(uint256 indexed id, uint256 size, uint256 resourceId, uint256 totalHoursToRun);
-
-    /// @notice Emitted when the size of a volume is updated
-    /// @param id The unique ID of the volume
-    /// @param size The updated size of the volume
-    event SizeUpdated(uint256 indexed id, uint256 size);
+    event VolumeCreated(uint256 indexed id, uint256 externalId, uint256 size, uint256 resourceId, uint256 totalHoursToRun);
 
     /// @notice Emitted when a volume is deleted
     /// @param id The unique ID of the volume
-    event VolumeDeleted(uint256 indexed id);
+    event VolumeDeleted(uint256 indexed id, uint256 externalId);
 
     /// @notice Modifier to restrict function access to Volume owner
     /// @param volumeId The ID of the Volume
@@ -65,7 +60,7 @@ contract C3Volume {
     /// @param size The size of the volume in GB
     /// @param resourceId The ID of the resource
     /// @param totalHoursToRun Total hours the volume is expected to run
-    function createVolume(uint256 size, uint256 resourceId, uint256 totalHoursToRun) external {
+    function createVolume(uint256 externalId, uint256 size, uint256 resourceId, uint256 totalHoursToRun) external {
         require(size > 0, "Volume size must be greater than 0");
         require(size <= 1048576, "Volume size must be less than or equal to 1 TB");
         require(totalHoursToRun > 0, "Total hours to run must be greater than 0");
@@ -94,7 +89,7 @@ contract C3Volume {
 
         volumeExists[id] = true;
 
-        emit VolumeCreated(id, size, resourceId, totalHoursToRun);
+        emit VolumeCreated(id, externalId, size, resourceId, totalHoursToRun);
     }
 
     /// @notice Function to update the consumed hours of a volume
@@ -123,12 +118,12 @@ contract C3Volume {
 
     /// @notice Function to delete a volume by ID
     /// @param id The unique ID of the volume
-    function deleteVolume(uint256 id) external onlyVolumeOwner(id) {
+    function deleteVolume(uint256 externalId, uint256 id) external onlyVolumeOwner(id) {
         require(volumeExists[id], "Volume does not exist");
 
         delete volumes[id];
         volumeExists[id] = false;
 
-        emit VolumeDeleted(id);
+        emit VolumeDeleted(id, externalId);
     }
 }
