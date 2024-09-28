@@ -31,6 +31,12 @@ contract C3Volume {
     /// @notice Mapping to check if a volume ID exists
     mapping(uint256 => bool) public volumeExists;
 
+    /// @notice Mapping of owner addresses to their Volume IDs
+    mapping(address => uint256[]) private ownerToVolumes;
+
+    /// @notice Mapping of user addresses to their token credit balances
+    mapping(address => uint256) public userCredits;
+
     /// @notice Emitted when a new volume is created
     /// @param id The unique ID of the volume
     /// @param size The size of the volume in GB
@@ -78,6 +84,10 @@ contract C3Volume {
             pricingContract.getResource(resourceId);
         require(!_deprecated, "Volume resource is deprecated");
         require(_resourceType == C3ResourcePricing.ResourceType.Volume, "Resource type is not Volume");
+
+        uint256 creditsToConsume = size * _pricePerHour * totalHoursToRun;
+        address sender = msg.sender;
+        require(userCredits[sender] >= creditsToConsume, "Insufficient balance to start virtual machine");
 
         nextId++;
         uint256 id = nextId;

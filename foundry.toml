@@ -4,6 +4,8 @@ out = "out"
 libs = ["lib"]
 [rpc_endpoints]
 sepolia = "${SEPOLIA_RPC_URL}"
+holesky = "${HOLESKY_RPC_URL}"
 
 [etherscan]
 sepolia = { key = "${SEPOLIA_ETHERSCAN_API_KEY}" }
+holesky = { key = "${HOLESKY_ETHERSCAN_API_KEY}" }
