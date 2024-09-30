@@ -36,7 +36,9 @@ contract C3Volume {
     /// @param size The size of the volume in GB
     /// @param resourceId The ID of the resource
     /// @param totalHoursToRun Total hours the volume is expected to run
-    event VolumeCreated(uint256 indexed id, uint256 externalId, uint256 size, uint256 resourceId, uint256 totalHoursToRun);
+    event VolumeCreated(
+        uint256 indexed id, uint256 externalId, uint256 size, uint256 resourceId, uint256 totalHoursToRun
+    );
 
     /// @notice Emitted when a volume is deleted
     /// @param id The unique ID of the volume

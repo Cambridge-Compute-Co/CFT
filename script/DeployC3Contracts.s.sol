@@ -9,7 +9,7 @@ import {C3Volume} from "../src/C3Volume.sol";
 
 contract DeployC3Contracts is Script {
     function run() external {
-        uint256 deployerPrivateKey = vm.envUint("SEPOLIA_PRIVATE_KEY");
+        uint256 deployerPrivateKey = vm.envUint("HOLESKY_PRIVATE_KEY");
         address manager = vm.addr(deployerPrivateKey);
 
         vm.startBroadcast(deployerPrivateKey);
@@ -23,7 +23,7 @@ contract DeployC3Contracts is Script {
         c3ResourcePricing.createResource(14, "Cloud-SSD", 96774, C3ResourcePricing.ResourceType.Volume);
         c3ResourcePricing.createResource(15, "PublicIP", 6720430, C3ResourcePricing.ResourceType.Other);
 
-        address tokenAddress = vm.envAddress("SEPOLIA_TOKEN_ADDRESS");
+        address tokenAddress = vm.envAddress("HOLESKY_TOKEN_ADDRESS");
         C3VirtualMachine c3VirtualMachine = new C3VirtualMachine(tokenAddress, pricingAddress, manager);
         address virtualMachineAddress = address(c3VirtualMachine);
         console.log("C3VirtualMachine deployed at:", virtualMachineAddress);
