@@ -7,7 +7,7 @@ import {CFT} from "../src/CFT.sol";
 
 contract DeployCFTToken is Script {
     function run() external {
-        uint256 deployerPrivateKey = vm.envUint("HOLESKY_PRIVATE_KEY");
+        uint256 deployerPrivateKey = vm.envUint("ACCOUNT_PRIVATE_KEY");
 
         vm.startBroadcast(deployerPrivateKey);
 
