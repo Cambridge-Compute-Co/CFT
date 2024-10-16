@@ -6,14 +6,21 @@ This project aims to provide a comprehensive solution for DePin (Decentralized P
 
 ## Contracts Address
 
-### Sepolia
+### Sepolia (prod)
 - **CFT Token**: 0x247EC86AfbbfF923D9E1E9555Be2241338dd5E0E
 - **C3ResourcePricing**: 0x35DaE49F6968a29aA0D6d4c7DFf24FF0522e7eA4
 - **C3VirtualMachine**: 0x7A5502491B90D4841D4eba71c2375fc5893f4E7F
     - VM Manager: 0xEeB40816c52DE2ae2875f2Ddef43DE9030891a10
 - **C3Volume**: 0x5E159c9237FB6B11f902578b26dFb39Ab1a97c44
 
-### Holesky
+### Sepolia (dev)
+- **CFT Token**: 0x247EC86AfbbfF923D9E1E9555Be2241338dd5E0E
+- **C3ResourcePricing**: 0x9Bf83Cb976e3EA108Cc263605Fe662Db719dDFfE
+- **C3VirtualMachine**: 0x30A49924d28d7A8551d19297C3Bde0DB10e8BEc7
+    - VM Manager: 0x472110Cd710Cf2cbCDe1DABBcC40eFcd5506fcD1
+- **C3Volume**: 0xBAe3544299c1e43aFcd2AEC1019A90d9C724dbfe
+
+### Holesky (dev)
 - **CFT Token**: 0xBE27EaEFE4b83F42A62A9EE07ff8665144980076
 - **C3ResourcePricing**: 0x77ff307B62F072702591e525C8f3205634361656
 - **C3VirtualMachine**: 0xD7BeA25f198C14FFCb68BDD0Dccc92D286e3C01b
@@ -86,7 +93,7 @@ Run script
 
 ```shell
 chmod +x script/deploy_CFT.sh
-./script/deploy_CFT.sh
+./script/deploy_CFT.sh [name-of-chain]
 ```
 ### ResourcePricing, VirtualMachine and Volume deploy Script
 
@@ -94,6 +101,6 @@ Run script
 
 ```shell
 chmod +x script/deploy_Contracts.sh
-./script/deploy_Contracts.sh
+./script/deploy_Contracts.sh [name-of-chain]
 ```
 
