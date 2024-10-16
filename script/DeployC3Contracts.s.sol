@@ -9,8 +9,9 @@ import {C3Volume} from "../src/C3Volume.sol";
 
 contract DeployC3Contracts is Script {
     function run() external {
-        uint256 deployerPrivateKey = vm.envUint("HOLESKY_PRIVATE_KEY");
+        uint256 deployerPrivateKey = vm.envUint("ACCOUNT_PRIVATE_KEY");
         address manager = vm.addr(deployerPrivateKey);
+        string memory chain_name = vm.envString("CHAIN_NAME");
 
         vm.startBroadcast(deployerPrivateKey);
 
@@ -23,15 +24,33 @@ contract DeployC3Contracts is Script {
         c3ResourcePricing.createResource(14, "Cloud-SSD", 96774, C3ResourcePricing.ResourceType.Volume);
         c3ResourcePricing.createResource(15, "PublicIP", 6720430, C3ResourcePricing.ResourceType.Other);
 
-        address tokenAddress = vm.envAddress("HOLESKY_TOKEN_ADDRESS");
-        C3VirtualMachine c3VirtualMachine = new C3VirtualMachine(tokenAddress, pricingAddress, manager);
-        address virtualMachineAddress = address(c3VirtualMachine);
-        console.log("C3VirtualMachine deployed at:", virtualMachineAddress);
+        deployVirtualMachine(chain_name, pricingAddress, manager);
 
         C3Volume c3Volume = new C3Volume(pricingAddress);
         address volumeAddress = address(c3Volume);
         console.log("C3Volume deployed at:", volumeAddress);
 
         vm.stopBroadcast();
+    }
+
+    function deployVirtualMachine(
+        string memory chain_name,
+        address pricingAddress,
+        address manager
+    ) internal {
+        address tokenAddress;
+
+        // Use keccak256 for string comparison
+        if (keccak256(abi.encodePacked(chain_name)) == keccak256(abi.encodePacked("sepolia"))) {
+            tokenAddress = vm.envAddress("SEPOLIA_TOKEN_ADDRESS");
+        } else if (keccak256(abi.encodePacked(chain_name)) == keccak256(abi.encodePacked("holesky"))) {
+            tokenAddress = vm.envAddress("HOLESKY_TOKEN_ADDRESS");
+        } else {
+            revert("Unsupported chain name");
+        }
+
+        C3VirtualMachine c3VirtualMachine = new C3VirtualMachine(tokenAddress, pricingAddress, manager);
+        address virtualMachineAddress = address(c3VirtualMachine);
+        console.log("C3VirtualMachine deployed at:", virtualMachineAddress);
     }
 }
